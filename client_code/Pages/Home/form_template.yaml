@@ -7,8 +7,11 @@ components:
       \ multiple lists, in case you need to make similar choices repeatedly.  \n\n\
       You do not need to login to use the site, but if you are not logged in your\
       \ lists are stored in your browser cache.  If you clear your browser cache you\
-      \ will lose your lists.  Logging in allows the site to save your lists in the\
-      \ cloud and you can then use the same lists from any computer."}
+      \ will lose your lists.   Anyone else using your computer can also see your\
+      \ lists.\n\nLogging in allows the site to save your lists in the cloud and other\
+      \ people will not be able to see your lists.  You will also be able to see your\
+      \ lists from any computer.\n\nIf you cannot decide whether to login or not,\
+      \ create a list with those two choices and let the site choose for you!"}
   type: RichText
   layout_properties: {grid_position: 'YOTYGD,WPFZKD'}
 is_package: true
