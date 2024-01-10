@@ -23,3 +23,24 @@ components:
   properties: {}
   name: navbar_links
   layout_properties: {slot: nav-right}
+  components:
+  - name: home
+    properties: {text: Home}
+    type: Link
+    layout_properties: {}
+  - name: lists
+    properties: {text: My Lists}
+    type: Link
+    layout_properties: {}
+  - name: login
+    properties: {text: Login}
+    type: Link
+    layout_properties: {}
+  - name: logout
+    properties: {text: Logout}
+    type: Link
+    layout_properties: {}
+- name: label_1
+  properties: {text: Choose for Me!}
+  type: Label
+  layout_properties: {slot: title}
