@@ -6,12 +6,86 @@ services:
 - source: /runtime/services/tables.yml
   client_config: {}
   server_config: {}
+- source: /runtime/services/anvil/users.yml
+  client_config: {allow_signup: true, enable_automatically: true, use_email: true,
+    confirm_email: true, use_google: true, allow_remember_me: true, remember_me_days: 30}
+  server_config: {user_table: users}
+- source: /runtime/services/google.yml
+  client_config: {}
+  server_config: {}
+startup: {type: module, module: Startup}
 package_name: Choose_For_Me
 allow_embedding: false
 name: Choose For Me
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
-startup_form: Form1
+startup_form: null
 native_deps: {head_html: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handlee&display=swap">
 
     '}
+db_schema:
+  users:
+    client: none
+    server: full
+    columns:
+    - name: email
+      admin_ui: {order: 0, width: 200}
+      type: string
+    - name: enabled
+      admin_ui: {order: 1, width: 200}
+      type: bool
+    - name: last_login
+      admin_ui: {order: 2, width: 200}
+      type: datetime
+    - name: password_hash
+      admin_ui: {order: 3, width: 200}
+      type: string
+    - name: n_password_failures
+      admin_ui: {order: 4, width: 200}
+      type: number
+    - name: confirmed_email
+      admin_ui: {order: 5, width: 200}
+      type: bool
+    - name: remembered_logins
+      admin_ui: {order: 6, width: 200}
+      type: simpleObject
+    - name: signed_up
+      admin_ui: {order: 7, width: 200}
+      type: datetime
+    title: Users
+  lists:
+    client: none
+    server: full
+    columns:
+    - name: id
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: modified
+      admin_ui: {width: 200, order: 1}
+      type: datetime
+    - name: owner
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: users
+    - name: title
+      admin_ui: {order: -1, width: 200}
+      type: string
+    title: Lists
+  choices:
+    client: none
+    server: full
+    columns:
+    - name: id
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: modified
+      admin_ui: {width: 200, order: 1}
+      type: datetime
+    - name: list
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: lists
+    - name: description
+      admin_ui: {order: -1, width: 200}
+      type: string
+    title: Choices
 renamed: true

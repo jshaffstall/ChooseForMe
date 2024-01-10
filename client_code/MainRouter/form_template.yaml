@@ -8,17 +8,15 @@ components:
   name: content_panel
   layout_properties: {slot: default}
   components:
-  - name: rich_text_1
-    properties: {content: "# Welcome to Choose for Me!\n\nThis site is for when  you\
-        \ have a choice to make and, for whatever reason, cannot make it.  Put your\
-        \ choices into a list and ask the site to choose for you.  You can also have\
-        \ multiple lists, in case you need to make similar choices repeatedly.  \n\
-        \nYou do not need to login to use the site, but if you are not logged in your\
-        \ lists are stored in your browser cache.  If you clear your browser cache\
-        \ you will lose your lists.  Logging in allows the site to save your lists\
-        \ in the cloud and you can then use the same lists from any computer."}
-    type: RichText
-    layout_properties: {grid_position: 'YRPISV,FCOOIZ'}
+  - name: label_2
+    properties: {text: "TODO: \n\nAllow the user to change the font to any Google\
+        \ font\n\nHave a dark mode toggle\n\nPossibly a color scheme mechanism?\n\n\
+        Give each choice item a UUID and a last modified date to make it easier to\
+        \ merge changes between the browser storage and cloud storage when they login\
+        \ after having made some changes.\n\nDon't use browser storage if they are\
+        \ logged in, for privacy reasons."}
+    type: Label
+    layout_properties: {grid_position: 'VQFTVU,SUKTTE'}
 - type: FlowPanel
   properties: {}
   name: navbar_links
