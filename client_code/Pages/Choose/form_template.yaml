@@ -14,20 +14,25 @@ components:
   type: Button
   layout_properties: {grid_position: 'QUZFBN,FAXVYK'}
   event_bindings: {click: add_choice_click}
-- name: data_grid_1
-  properties:
-    columns:
-    - {id: JKSDUP, title: Choice, data_key: choice}
-    - {id: VJQQOR, title: '', data_key: '', width: '175'}
-  type: DataGrid
+- name: choices_panel
+  properties: {visible: false}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'HKMKJU,ABLJRQ'}
   components:
-  - name: repeating_panel_1
-    properties: {item_template: Pages.Choose.RowTemplate1}
-    type: RepeatingPanel
-  layout_properties: {grid_position: 'CMTSKA,AVAKNP'}
-- name: choose
-  properties: {text: Choose for Me!}
-  type: Button
-  layout_properties: {grid_position: 'GTFIPJ,AIMXNB'}
-  event_bindings: {click: choose_click}
+  - name: data_grid_1
+    properties:
+      columns:
+      - {id: JKSDUP, title: Choice, data_key: choice}
+      - {id: VJQQOR, title: '', data_key: '', width: '175'}
+    type: DataGrid
+    components:
+    - name: repeating_panel_1
+      properties: {item_template: Pages.Choose.RowTemplate1}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'MHIQXR,XAUOIF'}
+  - name: choose
+    properties: {text: Choose for Me!}
+    type: Button
+    layout_properties: {grid_position: 'FACMTL,QFVNXN'}
+    event_bindings: {click: choose_click}
 is_package: true
