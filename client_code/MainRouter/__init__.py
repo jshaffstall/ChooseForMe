@@ -12,6 +12,7 @@ from .. import Cache
 from ..Pages.Home import Home
 from ..Pages.Lists import Lists
 from ..Pages.ListDetail import ListDetail
+from ..Pages.Choose import Choose
 
 @routing.default_template
 class MainRouter(MainRouterTemplate):
@@ -19,4 +20,16 @@ class MainRouter(MainRouterTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        # Any code you write here will run before the form opens.
+        self.lists.tag.url_hash = 'lists'
+        self.choose.tag.url_hash = 'choose'
+        self.home.tag.url_hash = ''
+    
+        #self.link_visibility()
+
+    def link_visibility(self):
+        self.login.visible = not Cache.user
+        self.logout.visible = bool(Cache.user)
+        self.lists.visible = bool(Cache.user)
+
+    def nav_click(self, sender, **event_args):
+       routing.set_url_hash(sender.tag.url_hash)

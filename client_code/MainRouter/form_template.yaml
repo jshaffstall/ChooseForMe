@@ -26,16 +26,22 @@ components:
     properties: {text: Home}
     type: Link
     layout_properties: {}
+    event_bindings: {click: nav_click}
+  - name: choose
+    properties: {text: Choose!}
+    type: Link
+    layout_properties: {}
+    event_bindings: {click: nav_click}
   - name: lists
-    properties: {text: My Lists}
+    properties: {text: My Lists, visible: false}
     type: Link
     layout_properties: {}
   - name: login
-    properties: {text: Login}
+    properties: {text: Login, visible: false}
     type: Link
     layout_properties: {}
   - name: logout
-    properties: {text: Logout}
+    properties: {text: Logout, visible: false}
     type: Link
     layout_properties: {}
 - name: label_1
