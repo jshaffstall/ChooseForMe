@@ -1,0 +1,18 @@
+is_package: true
+container: {type: DataRowPanel}
+components:
+- name: flow_panel_1
+  properties: {}
+  type: FlowPanel
+  layout_properties: {column: VJQQOR}
+  components:
+  - name: edit
+    properties: {text: '', icon: 'fa:pencil'}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: edit_click}
+  - name: delete
+    properties: {text: '', icon: 'fa:trash'}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: delete_click}

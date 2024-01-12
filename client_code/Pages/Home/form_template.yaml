@@ -4,9 +4,8 @@ components:
   properties: {content: "# Welcome to Choose for Me!\n\nThis site is for when  you\
       \ have a choice to make and, for whatever reason, cannot make it.  Put your\
       \ choices into a list and ask the site to choose for you.  \n\nTo get started\
-      \ click Choose! above.\n\nYou do not need to login to use the site, but if you\
-      \ do log in you can create multiple lists and the site will remember them for\
-      \ you."}
+      \ click **Choose!** above.\n\nDisclaimer: do not use the site for critical safety\
+      \ or life decisions!  Seek the advice of professionals for advice on those decisions."}
   type: RichText
   layout_properties: {grid_position: 'YOTYGD,WPFZKD'}
 is_package: true
