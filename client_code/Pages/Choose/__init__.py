@@ -21,11 +21,17 @@ class Choose(ChooseTemplate):
         self.repeating_panel_1.set_event_handler('x-edit', self.edit_choice)
         
         self.choices = []
+        self.panel_visibility()
 
+    def panel_visibility(self):
+        self.choices_panel.visible = len(self.choices) > 0
+        self.choose.visible = len(self.choices) > 1
+        
     def delete_choice(self, choice, **event_args):
         if confirm(f"Really delete the choice: {choice['choice']}"):
             self.choices.remove(choice)
             self.repeating_panel_1.items = self.choices
+            self.panel_visibility()
 
     def edit_choice(self, choice, **event_args):
         content = TextEditInAlert()
@@ -46,6 +52,7 @@ class Choose(ChooseTemplate):
         self.repeating_panel_1.items = self.choices
         self.choice_box.text = ''
         self.choice_box.focus()
+        self.panel_visibility()
 
     def choose_click(self, **event_args):
         choice = random.choice(self.choices)
