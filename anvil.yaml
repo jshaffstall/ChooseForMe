@@ -18,6 +18,7 @@ package_name: Choose_For_Me
 allow_embedding: false
 name: Choose For Me
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
+metadata: {title: Choose For Me, description: We make the choice when you cannot!}
 startup_form: null
 native_deps: {head_html: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handlee&display=swap">
 
