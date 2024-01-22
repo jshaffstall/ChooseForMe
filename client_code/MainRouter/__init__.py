@@ -23,8 +23,8 @@ class MainRouter(MainRouterTemplate):
         self.lists.tag.url_hash = 'lists'
         self.choose.tag.url_hash = 'choose'
         self.home.tag.url_hash = ''
-    
-        #self.link_visibility()
+
+        self.link_visibility()
 
     def link_visibility(self):
         self.login.visible = not Cache.user
@@ -32,4 +32,18 @@ class MainRouter(MainRouterTemplate):
         self.lists.visible = bool(Cache.user)
 
     def nav_click(self, sender, **event_args):
-       routing.set_url_hash(sender.tag.url_hash)
+        routing.set_url_hash(sender.tag.url_hash)
+
+    def login_click(self, **event_args):
+        Cache.user = anvil.users.login_with_form(allow_cancel=True)
+        self.link_visibility()
+
+    def logout_click(self, **event_args):
+        anvil.users.logout()
+        Cache.user = None
+        routing.clear_cache()
+        routing.set_url_hash('')
+        self.link_visibility()
+
+    def lists_click(self, **event_args):
+        routing.set_url_hash('lists')

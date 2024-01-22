@@ -36,14 +36,17 @@ components:
     properties: {text: My Lists, visible: false}
     type: Link
     layout_properties: {}
+    event_bindings: {click: lists_click}
   - name: login
     properties: {text: Login, visible: false}
     type: Link
     layout_properties: {}
+    event_bindings: {click: login_click}
   - name: logout
     properties: {text: Logout, visible: false}
     type: Link
     layout_properties: {}
+    event_bindings: {click: logout_click}
 - name: label_1
   properties: {text: Choose for Me!}
   type: Label

@@ -8,6 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil_extras import routing
 import random
+from ... import Cache
 
 from ...TextEditInAlert import TextEditInAlert
 
@@ -19,41 +20,57 @@ class Choose(ChooseTemplate):
 
         self.repeating_panel_1.set_event_handler('x-delete', self.delete_choice)
         self.repeating_panel_1.set_event_handler('x-edit', self.edit_choice)
-        
-        self.choices = []
+
+        self.repeating_panel_1.items = Cache.temp_list
         self.panel_visibility()
 
     def panel_visibility(self):
-        self.choices_panel.visible = len(self.choices) > 0
-        self.choose.visible = len(self.choices) > 1
+        self.choices_panel.visible = len(Cache.temp_list) > 0
+        self.choose.visible = len(Cache.temp_list) > 1
         
     def delete_choice(self, choice, **event_args):
         if confirm(f"Really delete the choice: {choice['choice']}"):
-            self.choices.remove(choice)
-            self.repeating_panel_1.items = self.choices
+            Cache.temp_list.remove(choice)
+            self.repeating_panel_1.items = Cache.temp_list
             self.panel_visibility()
 
     def edit_choice(self, choice, **event_args):
         content = TextEditInAlert()
         content.text_box_1.text = choice['choice']
         alert(content, dismissible=False, title="Edit choice description")
-        index = self.choices.index(choice)
-        self.choices[index]['choice'] = content.text_box_1.text
-        self.repeating_panel_1.items = self.choices
+        index = Cache.temp_list.index(choice)
+        Cache.temp_list[index]['choice'] = content.text_box_1.text
+        self.repeating_panel_1.items = Cache.temp_list
         
     def add_choice_click(self, **event_args):
         if not self.choice_box.text:
             return
 
-        self.choices.append ({
+        Cache.temp_list.append ({
             'choice': self.choice_box.text
         })
 
-        self.repeating_panel_1.items = self.choices
+        self.repeating_panel_1.items = Cache.temp_list
         self.choice_box.text = ''
         self.choice_box.focus()
         self.panel_visibility()
 
     def choose_click(self, **event_args):
-        choice = random.choice(self.choices)
+        choice = random.choice(Cache.temp_list)
         alert(f"We chose for you: {choice['choice']}")
+
+    def clear_all_click(self, **event_args):
+        if Cache.temp_list and confirm("Are you sure you want to clear all the choices?"):
+            Cache.temp_list = []
+            self.repeating_panel_1.items = Cache.temp_list
+            self.choice_box.text = ''
+            self.choice_box.focus()
+            self.panel_visibility()                
+
+    def timer_1_tick(self, **event_args):
+        self.save_list.visible = bool(Cache.user)
+
+    def save_list_click(self, **event_args):
+        # TODO: save the list to the currently logged in user's
+        # set of lists by asking the user to name the list
+        pass
