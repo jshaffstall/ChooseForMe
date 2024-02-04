@@ -33,7 +33,7 @@ components:
     layout_properties: {}
     event_bindings: {click: nav_click}
   - name: lists
-    properties: {text: My Lists, visible: false}
+    properties: {text: Saved Lists, visible: false}
     type: Link
     layout_properties: {}
     event_bindings: {click: lists_click}

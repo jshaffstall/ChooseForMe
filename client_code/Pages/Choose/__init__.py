@@ -1,5 +1,6 @@
 from ._anvil_designer import ChooseTemplate
 from anvil import *
+import anvil.server
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
 import anvil.users
@@ -13,6 +14,7 @@ from ... import Cache
 from ...TextEditInAlert import TextEditInAlert
 
 @routing.route('choose')
+@routing.route('choose', url_keys=['id'])
 class Choose(ChooseTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
@@ -21,6 +23,13 @@ class Choose(ChooseTemplate):
         self.repeating_panel_1.set_event_handler('x-delete', self.delete_choice)
         self.repeating_panel_1.set_event_handler('x-edit', self.edit_choice)
 
+        # TODO: see if we're being passed a list id and if so
+        # load the saved list from the server
+        #
+        # Add the list name panel to the panel visiblity function
+        # so it shows only if the list being displayed is a saved
+        # list.
+        
         self.repeating_panel_1.items = Cache.temp_list
         self.panel_visibility()
 

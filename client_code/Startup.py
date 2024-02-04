@@ -1,3 +1,4 @@
+import anvil.server
 from anvil_extras import routing
 import anvil.users
 from .MainRouter import MainRouter

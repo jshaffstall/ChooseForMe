@@ -1,5 +1,6 @@
 from ._anvil_designer import MainRouterTemplate
 from anvil import *
+import anvil.server
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
 import anvil.tables as tables
@@ -11,7 +12,6 @@ from .. import Cache
 
 from ..Pages.Home import Home
 from ..Pages.Lists import Lists
-from ..Pages.ListDetail import ListDetail
 from ..Pages.Choose import Choose
 
 @routing.default_template
