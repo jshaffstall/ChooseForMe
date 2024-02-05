@@ -27,9 +27,16 @@ def get_choices(list_id):
     if not list_row:
         raise ValueError("Invalid list id")
 
-    # TODO: return a list of dictionaries so it can be updated
-    # on the client and sent back to the server later
-    return app_tables.choices.search(tables.order_by('description'), list=list_row)
+    list_choices = app_tables.choices.search(tables.order_by('description'), list=list_row)
+
+    choices = []
+    for choice in list_choices:
+        choices.append({
+            'choice': choice['description'],
+            'id': choice['id']
+        })
+    
+    return list_row['title'], choices
 
 @anvil.server.callable
 def create_list(list_name, choices):
@@ -41,23 +48,27 @@ def create_list(list_name, choices):
     list_id = str(uuid.uuid4())
     list_row = app_tables.lists.add_row(id=list_id, owner=user, title=list_name, modified=datetime.now())
 
-    # TODO: choices should be a list of dictionaries
     for choice in choices:
-        app_tables.choices.add_row(description=choice, list=list_row, id=str(uuid.uuid4()), modified=datetime.now())
+        app_tables.choices.add_row(description=choice['choice'], list=list_row, id=str(uuid.uuid4()), modified=datetime.now())
+
+    return list_id
 
 @anvil.server.callable
-def update_list(list_row, list_name, choices):
+def update_list(list_id, list_name, choices):
     user = anvil.users.get_user()
 
     if not user:
         raise ValueError("Invalid user")
 
-    list_row = app_tables.lists.get(id=list_row['id'])
+    list_row = app_tables.lists.get(id=list_id)
 
     if not list_row or list_row['owner'] != user:
         raise ValueError("Invalid list")
 
     # TODO: choices should be a list of dictionaries
+    # the choice might have an id and need updated or it
+    # might be a new choice and need added.  If it has an id
+    # it might not have been changed at all.
     for choice in choices:
         app_tables.choices.add_row(description=choice, list=list_row, id=str(uuid.uuid4()), modified=datetime.now())
 

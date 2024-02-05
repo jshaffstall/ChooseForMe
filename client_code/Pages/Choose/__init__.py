@@ -23,11 +23,11 @@ class Choose(ChooseTemplate):
         self.repeating_panel_1.set_event_handler('x-delete', self.delete_choice)
         self.repeating_panel_1.set_event_handler('x-edit', self.edit_choice)
 
-        # TODO: see if we're being passed a list id and if so
-        # load the saved list from the server
-
         self.list_name = None
-        
+
+        if 'id' in self.url_dict:
+            self.list_name, Cache.temp_list = anvil.server.call('get_choices', self.url_dict['id'])
+
         self.repeating_panel_1.items = Cache.temp_list
         self.panel_visibility()
 
@@ -79,17 +79,28 @@ class Choose(ChooseTemplate):
         self.save_list.visible = bool(Cache.user)
 
     def save_list_click(self, **event_args):
-        # TODO: save the list to the currently logged in user's
-        # set of lists by asking the user to name the list
-        # using an alert
-        # 
-        # after saving the list to the server reload the choose
-        # page using the id of the list (replace the URL in history
-        # so using the back button doesn't go to the non-saved choose page)
-        pass
+        # If the list already exists, need to update
+        # it rather than create it.
+        if 'id' in self.url_dict:
+            anvil.server.call('update_list', self.url_dict['id'], self.list_name, Cache.temp_list)
+        else:
+            content = TextEditInAlert()
+            alert(content, dismissible=False, title="Enter the list name")
+            if not content.text_box_1.text:
+                alert("You did not enter a list name, list not saved")
+                return
+    
+            list_id = anvil.server.call('create_list', content.text_box_1.text, Cache.temp_list)
+            routing.set_url_hash(f'choose?id={list_id}', replace_current_url=True)
 
     def save_name_click(self, **event_args):
-        # On first click enable the text box and change the icon on the button
-        # to a check mark.  On second click update self.list_name with the text
-        # box value, disable the text box, and change the icon back to the pencil
-        pass
+        # Writeback data binding takes care of keeping
+        # self.list_name updated, just need to manage
+        # the state of the text box and button here
+        if self.list_name_box.enabled:
+            self.save_name.icon = 'fa:pencil'
+            self.list_name_box.enabled = False
+        else:
+            self.save_name.icon = 'fa:check'
+            self.list_name_box.enabled = True
+            
