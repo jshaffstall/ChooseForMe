@@ -25,10 +25,8 @@ class Choose(ChooseTemplate):
 
         # TODO: see if we're being passed a list id and if so
         # load the saved list from the server
-        #
-        # Add the list name panel to the panel visiblity function
-        # so it shows only if the list being displayed is a saved
-        # list.
+
+        self.list_name = None
         
         self.repeating_panel_1.items = Cache.temp_list
         self.panel_visibility()
@@ -36,6 +34,7 @@ class Choose(ChooseTemplate):
     def panel_visibility(self):
         self.choices_panel.visible = len(Cache.temp_list) > 0
         self.choose.visible = len(Cache.temp_list) > 1
+        self.list_name_panel.visible = 'id' in self.url_dict
         
     def delete_choice(self, choice, **event_args):
         if confirm(f"Really delete the choice: {choice['choice']}"):
@@ -82,4 +81,15 @@ class Choose(ChooseTemplate):
     def save_list_click(self, **event_args):
         # TODO: save the list to the currently logged in user's
         # set of lists by asking the user to name the list
+        # using an alert
+        # 
+        # after saving the list to the server reload the choose
+        # page using the id of the list (replace the URL in history
+        # so using the back button doesn't go to the non-saved choose page)
+        pass
+
+    def save_name_click(self, **event_args):
+        # On first click enable the text box and change the icon on the button
+        # to a check mark.  On second click update self.list_name with the text
+        # box value, disable the text box, and change the icon back to the pencil
         pass
