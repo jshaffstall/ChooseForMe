@@ -65,12 +65,21 @@ def update_list(list_id, list_name, choices):
     if not list_row or list_row['owner'] != user:
         raise ValueError("Invalid list")
 
-    # TODO: choices should be a list of dictionaries
     # the choice might have an id and need updated or it
     # might be a new choice and need added.  If it has an id
     # it might not have been changed at all.
     for choice in choices:
-        app_tables.choices.add_row(description=choice, list=list_row, id=str(uuid.uuid4()), modified=datetime.now())
+        if 'id' in choice:
+            choice_row = app_tables.choices.get(id=choice['id'], list=list_row)
+
+            if not choice_row:
+                raise ValueError("Invalid choice id")
+
+            if choice_row['description'] != choice['choice']:
+                choice_row['description'] = choice['choice']
+                choice_row['modified'] = datetime.now()
+        else:
+            app_tables.choices.add_row(description=choice['choice'], list=list_row, id=str(uuid.uuid4()), modified=datetime.now())
 
 
 

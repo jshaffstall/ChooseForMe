@@ -21,6 +21,10 @@ components:
       type: Button
       layout_properties: {}
       event_bindings: {click: save_name_click}
+  - name: needs_saved
+    properties: {text: The list has changed and needs saved, visible: false}
+    type: Label
+    layout_properties: {grid_position: 'EOEEHH,AXDGZH'}
 - name: label_1
   properties: {text: Enter the description of a choice below}
   type: Label
