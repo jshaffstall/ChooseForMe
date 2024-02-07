@@ -1,4 +1,6 @@
-container: {type: ColumnPanel}
+container:
+  type: ColumnPanel
+  event_bindings: {show: form_show}
 components:
 - name: list_name_panel
   properties: {visible: false}

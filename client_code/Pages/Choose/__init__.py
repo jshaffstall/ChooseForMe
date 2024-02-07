@@ -30,8 +30,7 @@ class Choose(ChooseTemplate):
         if 'id' in self.url_dict:
             Cache.list_name, Cache.temp_list = anvil.server.call('get_choices', self.url_dict['id'])
             Cache.list_id = self.url_dict['id']
-            
-        self.list_name_box.text = Cache.list_name
+
         self.repeating_panel_1.items = Cache.temp_list
         self.panel_visibility()
 
@@ -121,4 +120,7 @@ class Choose(ChooseTemplate):
         else:
             self.save_name.icon = 'fa:check'
             self.list_name_box.enabled = True
-            
+
+    def form_show(self, **event_args):
+        self.panel_visibility()
+        self.list_name_box.text = Cache.list_name    
