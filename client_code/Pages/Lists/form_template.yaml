@@ -1,3 +1,19 @@
 container: {type: ColumnPanel}
-components: []
+components:
+- name: no_lists_message
+  properties: {text: 'It doesn''t look like you have any saved lists.  Head over to
+      the Choose screen, create a list, and save it for later use to see it here.'}
+  type: Label
+  layout_properties: {grid_position: 'QCHDCQ,GKNKLC'}
+- name: data_grid_1
+  properties:
+    columns:
+    - {id: JKSDUP, title: List Name, data_key: title}
+    - {id: VJQQOR, title: 'Delete?', data_key: column_2, width: '150'}
+  type: DataGrid
+  components:
+  - name: repeating_panel_1
+    properties: {item_template: Pages.Lists.RowTemplate2}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'PICCUP,YDCOJK'}
 is_package: true

@@ -20,9 +20,13 @@ name: Choose For Me
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {title: Choose For Me, description: We make the choice when you cannot!}
 startup_form: null
-native_deps: {head_html: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handlee&display=swap">
-
-    '}
+native_deps: {head_html: "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Handlee&display=swap\"\
+    >\n\n<style>\n.anvil-extras-tabs .tabs {\n    overflow-x: hidden !important;\n\
+    }\n  \n.anvil-role-striped .anvil-data-row-panel:nth-child(even) {\n    background:\
+    \ #EEEEEE;\n}\n\n.anvil-role-initial-fill .flow-panel-gutter > div:first-child\
+    \ {\n  flex-grow: 1 !important;\n}\n\n.anvil-role-second-fill .flow-panel-gutter\
+    \ > div:nth-child(2) {\n  flex-grow: 1 !important;\n}\n\n.anvil-role-top-border-solid\
+    \ {\n    border-top-style:  solid;\n}\n</style>\n"}
 db_schema:
   users:
     client: none
