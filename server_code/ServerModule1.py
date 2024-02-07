@@ -16,6 +16,23 @@ def get_lists():
     return app_tables.lists.search(tables.order_by('modified', ascending=False), owner=user)
 
 @anvil.server.callable
+def delete_list(list_row):
+    user = anvil.users.get_user()
+
+    if not user:
+        raise ValueError("Invalid user")
+
+    if list_row['owner'] != user:
+        raise ValueError("Invalid list")
+
+    list_choices = app_tables.choices.search(list=list_row)
+    for choice in list_choices:
+        choice.delete()
+        
+    list_row.delete()
+    return app_tables.lists.search(tables.order_by('modified', ascending=False), owner=user)
+
+@anvil.server.callable
 def get_choices(list_id):
     user = anvil.users.get_user()
 

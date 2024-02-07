@@ -1,0 +1,15 @@
+is_package: true
+container: {type: DataRowPanel}
+components:
+- name: delete
+  properties: {text: '', icon: 'fa:times', foreground: red}
+  type: Button
+  layout_properties: {column: VJQQOR}
+  event_bindings: {click: delete_click}
+- name: link_1
+  properties: {}
+  type: Link
+  layout_properties: {column: JKSDUP}
+  data_bindings:
+  - {property: text, code: 'self.item[''title'']', writeback: false}
+  event_bindings: {click: link_1_click}
