@@ -17,7 +17,6 @@ from ...TextEditInAlert import TextEditInAlert
 @routing.route('choose', url_keys=['id'])
 class Choose(ChooseTemplate):
     def __init__(self, **properties):
-        self.list_name = None
         self.list_changed = False
         
         # Set Form properties and Data Bindings.
@@ -26,25 +25,20 @@ class Choose(ChooseTemplate):
         self.repeating_panel_1.set_event_handler('x-delete', self.delete_choice)
         self.repeating_panel_1.set_event_handler('x-edit', self.edit_choice)
 
-        # TODO: what to do if the user saves a list and gets redirected to the
-        # list of choices with the id in the URL but then clicks the Choose button?
-        # Should they see the same list of choices again but without the list name?
-        # Or should they see an empty anonymous list?
-        # Or should they see the named list?
-        # Probably the last list they saw in the Choose screen, regardless of URL.
-        # We can do that if we store more info in the Cache module.
-        
+        # If the user is asking for a specific list, give it to them.
+        # Otherwise, give them the list in the Cache.
         if 'id' in self.url_dict:
-            self.list_name, Cache.temp_list = anvil.server.call('get_choices', self.url_dict['id'])
-            self.refresh_data_bindings()
-
+            Cache.list_name, Cache.temp_list = anvil.server.call('get_choices', self.url_dict['id'])
+            Cache.list_id = self.url_dict['id']
+            
+        self.list_name_box.text = Cache.list_name
         self.repeating_panel_1.items = Cache.temp_list
         self.panel_visibility()
 
     def panel_visibility(self):
         self.choices_panel.visible = len(Cache.temp_list) > 0
         self.choose.visible = len(Cache.temp_list) > 1
-        self.list_name_panel.visible = 'id' in self.url_dict
+        self.list_name_panel.visible = Cache.list_id is not None
         self.needs_saved.visible = self.list_changed
         
     def delete_choice(self, choice, **event_args):
@@ -84,12 +78,14 @@ class Choose(ChooseTemplate):
         alert(f"We chose for you: {choice['choice']}")
 
     def clear_all_click(self, **event_args):
-        if Cache.temp_list and confirm("Are you sure you want to clear all the choices?"):
+        if self.list_changed and confirm("Your current list has changed and not been saved.  Starting a new list at this point will lose those changes.  Are you sure you want to start a new list?"):
             Cache.temp_list = []
+            Cache.list_id = None
+            Cache.list_name = None
             self.repeating_panel_1.items = Cache.temp_list
             self.choice_box.text = ''
             self.choice_box.focus()
-            self.list_changed = True
+            self.list_changed = False
             self.panel_visibility()                
 
     def timer_1_tick(self, **event_args):
@@ -98,8 +94,9 @@ class Choose(ChooseTemplate):
     def save_list_click(self, **event_args):
         # If the list already exists, need to update
         # it rather than create it.
-        if 'id' in self.url_dict:
-            anvil.server.call('update_list', self.url_dict['id'], self.list_name, Cache.temp_list)
+
+        if Cache.list_id:
+            anvil.server.call('update_list', Cache.list_id, Cache.list_name, Cache.temp_list)
             self.list_changed = False
             self.panel_visibility()  
         else:
@@ -117,8 +114,8 @@ class Choose(ChooseTemplate):
             self.save_name.icon = 'fa:pencil'
             self.list_name_box.enabled = False
 
-            if self.list_name_box.text != self.list_name:
-                self.list_name = self.list_name_box.text
+            if self.list_name_box.text != Cache.list_name:
+                Cache.list_name = self.list_name_box.text
                 self.list_changed = False
                 self.panel_visibility()  
         else:

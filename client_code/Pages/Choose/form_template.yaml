@@ -14,8 +14,7 @@ components:
       properties: {enabled: false}
       type: TextBox
       layout_properties: {}
-      data_bindings:
-      - {property: text, code: self.list_name, writeback: false}
+      data_bindings: []
     - name: save_name
       properties: {text: '', icon: 'fa:pencil'}
       type: Button
@@ -44,7 +43,7 @@ components:
     type: Button
     event_bindings: {click: add_choice_click}
   - name: clear_all
-    properties: {text: Clear All Choices}
+    properties: {text: Start New List}
     type: Button
     layout_properties: {}
     event_bindings: {click: clear_all_click}
