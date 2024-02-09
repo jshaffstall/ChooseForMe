@@ -77,15 +77,13 @@ class Choose(ChooseTemplate):
         alert(f"We chose for you: {choice['choice']}")
 
     def clear_all_click(self, **event_args):
-        if self.list_changed and confirm("Your current list has changed and not been saved.  Starting a new list at this point will lose those changes.  Are you sure you want to start a new list?"):
-            Cache.temp_list = []
-            Cache.list_id = None
-            Cache.list_name = None
-            self.repeating_panel_1.items = Cache.temp_list
-            self.choice_box.text = ''
-            self.choice_box.focus()
-            self.list_changed = False
-            self.panel_visibility()                
+        if self.list_changed and not confirm("Your current list has changed and not been saved.  Starting a new list at this point will lose those changes.  Are you sure you want to start a new list?"):
+            return
+            
+        Cache.temp_list = []
+        Cache.list_id = None
+        Cache.list_name = None
+        routing.set_url_hash('choose')
 
     def timer_1_tick(self, **event_args):
         self.save_list.visible = bool(Cache.user)

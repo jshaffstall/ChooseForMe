@@ -37,6 +37,8 @@ class MainRouter(MainRouterTemplate):
     def login_click(self, **event_args):
         Cache.user = anvil.users.login_with_form(allow_cancel=True)
         self.link_visibility()
+        if Cache.user:
+            routing.set_url_hash('lists')
 
     def logout_click(self, **event_args):
         anvil.users.logout()
