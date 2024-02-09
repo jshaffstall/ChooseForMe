@@ -25,10 +25,6 @@ class Choose(ChooseTemplate):
         self.repeating_panel_1.set_event_handler('x-delete', self.delete_choice)
         self.repeating_panel_1.set_event_handler('x-edit', self.edit_choice)
 
-        # TODO: when clicking from a saved list after having started
-        # a new list, the saved list doesn't get reloaded here
-        # Why?
-        
         # If the user is asking for a specific list, give it to them.
         # Otherwise, give them the list in the Cache.
         if 'id' in self.url_dict:

@@ -18,4 +18,4 @@ class RowTemplate2(RowTemplate2Template):
         self.parent.raise_event('x-delete', item=self.item)
 
     def link_1_click(self, **event_args):
-        routing.set_url_hash(f'choose?id={self.item["id"]}')
+        routing.set_url_hash(f'choose?id={self.item["id"]}', load_from_cache=False)
